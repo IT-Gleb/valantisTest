@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { useMaxRec, useGoods } from "../../hooks/swrHooks";
 import ValantisPage from "../valantisPage";
-//import Pages from "../Pages";
+
 import MySpinner from "../UI/mySpinner";
 import ErrorBox from "../UI/messages/errorBox";
 import FilterShowBtn from "../UI/buttons/filterShowBtn";
 import FilterBox from "../filterBox";
 import useFilter from "../../store/store";
-//import FilteredContent from "./filteredContent";
+
 import { LOAD_DELAY } from "../../lib";
 
 const Pages = lazy(() => import("../Pages"));

@@ -6,24 +6,35 @@ import {
   MouseEvent,
 } from "react";
 import useFilter from "../../../store/store";
+const minLength: number = 2;
 
 function InputName({ paramEnter }: { paramEnter: () => void }) {
   const getNameText = useFilter((state) => state.filterName);
   const [nameText, setNameText] = useState<string>(getNameText);
   const setFilterName = useFilter((state) => state.setName);
   const setupCurrValue = useFilter((state) => state.setCurrentValue);
+  const [isCorrect, setIsCorrect] = useState<boolean>(
+    getNameText.trim().length > minLength
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   const changeText = (event: ChangeEvent<HTMLInputElement>) => {
     setNameText(event.currentTarget.value);
-    setupCurrValue(event.currentTarget.value);
+
     let text: string = event.currentTarget.value;
     text = text.trim();
-    if (text.length > 2) setFilterName(event.currentTarget.value);
+    let tempCorrect: boolean = text.trim().length > minLength;
+    //console.log(tempCorrect);
+    setIsCorrect(tempCorrect);
+    if (tempCorrect) {
+      setupCurrValue(event.currentTarget.value);
+      setFilterName(event.currentTarget.value);
+    }
   };
 
   const EnterKey = (event: KeyboardEvent<HTMLInputElement>) => {
     event.stopPropagation();
+    if (!isCorrect) return;
     if (event.key === "Enter") {
       //console.log(event.key);
       paramEnter();
@@ -33,6 +44,8 @@ function InputName({ paramEnter }: { paramEnter: () => void }) {
   const clearText = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setNameText("");
+    setupCurrValue("бd");
+    setFilterName("бd");
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -57,6 +70,11 @@ function InputName({ paramEnter }: { paramEnter: () => void }) {
         >
           x
         </button>
+        {!isCorrect && (
+          <div className="text-[0.7rem]/[1rem] font-medium text-slate-600 mt-2">
+            Введите не менее 3-х символов для поиска товара...
+          </div>
+        )}
       </div>
     </label>
   );

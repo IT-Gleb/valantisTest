@@ -1,4 +1,5 @@
 import { TValantisData, TValantisItem } from "../lib";
+import UpBtn from "./UI/buttons/upBtn";
 //import ReloadBtn from "./UI/reloadBtn";
 import ValantisItem from "./valantisItem";
 
@@ -32,10 +33,17 @@ function ValantisPage({
             ></ValantisItem>
           ))}
       </div>
-      <div className="my-10 border-t-2 border-t-slate-200 pt-5">
-        Страница товаров:{" "}
-        <span className="text-[24px]/[24px] font-bold">{paramPage + 1}</span>
-        <span className="text-[24px]/[24px] font-bold">/{paramMaxRec}</span>
+      <div className="w-[100%] my-10 border-t-2 border-t-slate-200 pt-5 flex items-center justify-between">
+        <div>
+          Страница товаров:{" "}
+          <span className="text-[24px]/[24px] font-bold">{paramPage + 1}</span>
+          <span className="text-[24px]/[24px] font-bold">/{paramMaxRec}</span>
+        </div>
+        {paramItems.length > 12 && (
+          <div className=" self-end">
+            <UpBtn></UpBtn>
+          </div>
+        )}
       </div>
     </section>
   );

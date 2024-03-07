@@ -21,7 +21,7 @@ function MainApp() {
           </div>
           <span>Тестовое задание</span>
           <span className="mt-auto ml-auto text-[0.65rem]/[0.8rem]">
-            Верстка и программирование by Gleb Torgashin march 2024
+            Верстка и программирование by Gleb Torgashin. (march 2024)
           </span>
         </div>
       </HeaderTop>
@@ -31,7 +31,7 @@ function MainApp() {
       <FooterMain>
         <div className=" w-[100%] flex flex-col md:flex-row items-end gap-x-1 pt-2 ">
           <span className=" self-start mr-auto text-[0.65rem]/[0.8rem]">
-            Верстка и программирование by Gleb Torgashin march 2024
+            Верстка и программирование by Gleb Torgashin. (march 2024)
           </span>
           <span>Тестовое задание</span>
           <h1 className=" hidden md:inline-block whitespace-nowrap text-[4rem]/[4rem] -skew-x-12">
