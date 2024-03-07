@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    body{
+        @apply accent-slate-800;
+    }
+}
+
+@layer components{
+    body{
+        @apply bg-white min-w-[300px] overflow-x-hidden min-h-[100vh] flex flex-col;
+        
+    }
+    .container{
+        @apply max-w-[80%] mx-auto;
+    }
+}
