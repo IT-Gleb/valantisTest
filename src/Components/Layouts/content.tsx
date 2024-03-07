@@ -67,7 +67,7 @@ function Content() {
   if (isFiltered) {
     return (
       <Suspense fallback={<MySpinner></MySpinner>}>
-        <FilteredContent></FilteredContent>;
+        <FilteredContent></FilteredContent>
       </Suspense>
     );
   }

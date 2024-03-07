@@ -67,7 +67,11 @@ function FilteredContent() {
 
   //Загрузка
   if (loading) {
-    return <MySpinner></MySpinner>;
+    return (
+      <div className="w-[100%] mt-4">
+        <MySpinner></MySpinner>
+      </div>
+    );
   }
 
   //Если ничего не найдено
