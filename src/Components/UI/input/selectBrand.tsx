@@ -5,7 +5,7 @@ import { noName } from "../../../lib";
 //import { noName } from "../../../lib";
 
 function SelectBrand() {
-  const setupValue: string | null = useFilter((state) => state.filterBrand);
+  const setupValue: string = useFilter((state) => state.filterBrand);
   const [selValue, setSelValue] = useState<string | null>(setupValue);
   const setupFilterBrand = useFilter((state) => state.setBrand);
   const getOptionsData = useFilter((state) => state.actionGetBrandsNames);
@@ -31,7 +31,7 @@ function SelectBrand() {
           по Бренду:
           <select
             className="w-[100%] ml-auto text-[0.8rem]/[1.1rem] bg-slate-100 p-2 border-2 border-slate-600/30 outline-none focus:border-slate-950 focus:font-bold "
-            value={selValue}
+            value={selValue as string}
             onChange={changeValue}
           >
             <option

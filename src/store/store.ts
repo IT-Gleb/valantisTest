@@ -12,7 +12,7 @@ export type TState = {
   filterMode: number;
   filterName: string;
   filterPrice: number;
-  filterBrand: string | null;
+  filterBrand: string;
   Brands: string[];
   isLoading: boolean;
   activePage: number;

@@ -1,3 +1,5 @@
+import PicLogo from "/src/assets/images/filter.png";
+
 function FilterShowBtn({
   setShowFilter,
   paramTitle,
@@ -16,11 +18,7 @@ function FilterShowBtn({
     >
       {paramTitle}
       <div className="block w-fit absolute left-1 top-1">
-        <img
-          src={"../../src/assets/images/filter.png"}
-          alt={paramTitle}
-          loading="lazy"
-        />
+        <img src={PicLogo} alt={paramTitle} loading="lazy" />
       </div>
     </button>
   );
