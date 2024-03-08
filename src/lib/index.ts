@@ -6,7 +6,7 @@ export const ITEMS_PER_PAGE: number = 50;
 export const ITEMS_DOWNLOADED: number = ITEMS_PER_PAGE + 10;
 export const PaginationBtnsPageCount: number = 7;
 export const noName: string = "Без бренда";
-export const LOAD_DELAY: number = 4800;
+export const LOAD_DELAY: number = 2400;
 
 export type TValantisItem = {
   id: string;

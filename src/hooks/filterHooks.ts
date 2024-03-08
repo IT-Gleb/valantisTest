@@ -33,6 +33,11 @@ async function doFetchData(
       //paramSetupData(data.result);
       //paramSetupLoaded(true);
       let tmp: string[] = Array.from(data.result);
+      //Проверить на наличие данных
+      if (tmp.length < 1) {
+        errStatus = 133;
+        ErrorStatus(errStatus); //Сформировать ошибку
+      }
       //Убрать повторяющиеся значения
       tmp = uniq(tmp);
 
@@ -71,12 +76,17 @@ async function doFetchData(
       if (res.ok) {
         //console.log(data_2.result);
         paramSetupData(data_2.result);
-        paramSetupLoaded(false);
+        //paramSetupLoaded(false);
       }
     }
   } catch (err) {
     console.log(err);
-    if (errStatus !== 401 && errStatus !== 403 && errStatus !== 404) {
+    if (
+      errStatus !== 133 &&
+      errStatus !== 401 &&
+      errStatus !== 403 &&
+      errStatus !== 404
+    ) {
       setTimeout(() => {
         doFetchData(
           paramFetchOptions,
@@ -162,7 +172,9 @@ function useFilteredData() {
     function getData(paramData: number) {
       setAllRec(paramData);
       setPagesCount(Math.ceil(paramData / ITEMS_PER_PAGE));
+      setIsLoad(false);
     }
+
     function isLoading(param: boolean) {
       setIsLoad(param);
     }

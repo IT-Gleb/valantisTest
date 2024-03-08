@@ -51,13 +51,19 @@ function FilteredContent() {
   useEffect(() => {
     setLoading(true);
     timerId.current = setTimeout(() => {
-      setLoading(false);
-      if (isLoad) {
-        setLoading(false);
+      if (isLoad || data.length < 1) {
+        setLoading(true);
         clearInterval(timerId.current);
+        //Только если загрузка и нет данных
         timerId.current = setTimeout(() => {
-          setLoading(true);
+          if (isLoad && data.length < 1) {
+            setLoading(true);
+          } else {
+            setLoading(false);
+          }
         }, LOAD_DELAY);
+      } else {
+        setLoading(false);
       }
     }, LOAD_DELAY);
     return () => {
@@ -68,7 +74,7 @@ function FilteredContent() {
   //Загрузка
   if (loading) {
     return (
-      <div className="w-[100%] mt-4">
+      <div className="w-[100%] mt-[20%]">
         <MySpinner></MySpinner>
       </div>
     );

@@ -30,7 +30,17 @@ function Content() {
   useEffect(() => {
     setLoading(true);
     timerId.current = setTimeout(() => {
-      setLoading(false);
+      if (isLoading || goods.length < 1) {
+        setLoading(true);
+        clearTimeout(timerId.current);
+        timerId.current = setTimeout(() => {
+          setLoading(false);
+          clearTimeout(timerId.current);
+        }, LOAD_DELAY);
+        //-------------------
+      } else {
+        setLoading(false);
+      }
     }, LOAD_DELAY);
     return () => {
       clearTimeout(timerId.current);
@@ -38,7 +48,11 @@ function Content() {
   }, [currentPage]);
 
   if (loading) {
-    return <MySpinner></MySpinner>;
+    return (
+      <div className="w-[100%] nt-[20%]">
+        <MySpinner></MySpinner>
+      </div>
+    );
   }
 
   if (!loading && maxRec < 1)

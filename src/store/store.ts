@@ -5,7 +5,7 @@ import {
   TparamObject,
   setup_FetchOptions,
 } from "../lib";
-import { orderBy, uniq } from "lodash";
+import { uniq, orderBy } from "lodash";
 
 export type TState = {
   active: boolean;
@@ -74,9 +74,9 @@ const useFilter = create<TState & TActions>((set, get) => ({
         tmp = uniq(tmp);
         //tmp = Array.from(uniq);
         //Отсортировать по алфавиту
-        tmp = orderBy(tmp, [], ["asc"]);
+        if (tmp.length > 1) tmp = orderBy(tmp, [], ["asc"]);
 
-        set({ Brands: tmp, isLoading: false });
+        set({ Brands: tmp.length > 0 ? tmp : [], isLoading: false });
       }
     } catch (err) {
       set({ isLoading: false, Brands: [] });

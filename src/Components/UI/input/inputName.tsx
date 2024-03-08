@@ -22,13 +22,13 @@ function InputName({ paramEnter }: { paramEnter: () => void }) {
     setNameText(event.currentTarget.value);
 
     let text: string = event.currentTarget.value;
-    text = text.trim();
+    text = text.trim().toLowerCase();
     let tempCorrect: boolean = text.trim().length > minLength;
     //console.log(tempCorrect);
     setIsCorrect(tempCorrect);
     if (tempCorrect) {
-      setupCurrValue(event.currentTarget.value);
-      setFilterName(event.currentTarget.value);
+      setupCurrValue(text);
+      setFilterName(text);
     }
   };
 
