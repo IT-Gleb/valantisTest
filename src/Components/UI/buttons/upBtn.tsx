@@ -1,5 +1,4 @@
 import { MouseEvent } from "react";
-import ArrowUp from "../../../../src/assets/images/up-arrow.svg";
 
 function UpBtn() {
   const clickUp = (event: MouseEvent<HTMLButtonElement>) => {
