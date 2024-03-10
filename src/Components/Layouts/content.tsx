@@ -105,7 +105,7 @@ function Content() {
           <MessageBox paramClose={() => setMessage(false)}>
             <div>
               Привет, Волантис.
-              <p>Ваше задание</p>
+              <p>Ваше задание:</p>
               <ul className="w-fit mx-auto text-[0.85rem]/[1.2rem]">
                 <li>
                   <a
@@ -137,7 +137,7 @@ function Content() {
                     href="https://it-gleb.github.io/Paper/"
                     target="_blank"
                   >
-                    1. Верстка по макету Figma.
+                    1. Верстка по макету Figma. (Адаптив)
                   </a>
                 </li>
                 <li>
@@ -156,7 +156,7 @@ function Content() {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    3. Верстка по макету Figma.
+                    3. Верстка по макету Figma.(Адаптив)
                   </a>
                 </li>
                 <li className="mt-8">

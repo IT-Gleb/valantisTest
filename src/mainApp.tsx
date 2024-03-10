@@ -28,7 +28,7 @@ function MainApp() {
         </div>
       </HeaderTop>
       <MainMenu></MainMenu>
-      <main className="container  flex-auto min-h-[80vh] mt-5">
+      <main className="w-[96%] md:w-[90%] pl-3 xl:container flex-auto min-h-[80vh] mt-5">
         <Outlet></Outlet>
         {/* <Content></Content> */}
       </main>

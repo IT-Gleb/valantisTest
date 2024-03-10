@@ -2,9 +2,9 @@ import PicValantis from "../../assets/images/1200px-Valantis.jpg";
 
 function Valantis() {
   return (
-    <section className="container text-[0.9rem]/[1.2rem] p-2">
+    <section className="w-[100%] text-[0.9rem]/[1.2rem] px-4">
       <img
-        className="w-[65%] h-[46%] float-left p-4"
+        className="w-[96%] lg:w-[66%] aspect-video float-left p-2"
         src={PicValantis}
         alt="Изображение. Волантис."
         loading="lazy"
