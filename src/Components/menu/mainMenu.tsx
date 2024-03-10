@@ -5,7 +5,7 @@ function MainMenu() {
   return (
     <nav className="w-[100%] bg-slate-700 text-slate-100 p-1" role="navigation">
       <ul
-        className="w-[60%] mx-auto flex items-center justify-end gap-x-4 lg:gap-x-10 uppercase font-bold"
+        className="w-[100%] lg:w-[60%] lg:mx-auto flex items-center justify-start gap-x-2 md:justify-center md:gap-x-4 lg:justify-end  lg:gap-x-10 text-[0.8rem]/[1.2rem] xl:text-[1.2rem]/[1.5rem] uppercase font-bold"
         role="menu"
       >
         <li className="cursor-pointer p-1">

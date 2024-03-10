@@ -1,97 +1,56 @@
-import { createBrowserRouter, createHashRouter } from "react-router-dom";
-import { BASE_URL, BaseLink, aboutLink, testLink } from "../lib";
-import { Suspense, lazy } from "react";
-import MySpinner from "../Components/UI/mySpinner";
+import MainApp from "../mainApp.tsx";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
-const ThisApp = lazy(() => import("../mainApp"));
-const Production = lazy(
-  () => import(BASE_URL + "src/Components/Layouts/content")
-);
-const About = lazy(() => import(BASE_URL + "src/Components/Layouts/valantis"));
-const Test = lazy(() => import(BASE_URL + "src/Components/Layouts/testPage"));
-const ErrPage = lazy(
-  () => import(BASE_URL + "src/Components/Layouts/errorPage")
-);
+import MySpinner from "../Components/UI/mySpinner.tsx";
 
-export const MyHashRouter = createHashRouter([
-  {
-    path: "/",
-    element: (
-      <Suspense fallback={<MySpinner></MySpinner>}>
-        <ThisApp></ThisApp>
-      </Suspense>
-    ),
-    errorElement: <ErrPage />,
-    children: [
-      {
-        path: BaseLink,
-        element: (
-          <Suspense fallback={<MySpinner></MySpinner>}>
-            <Production />
-          </Suspense>
-        ),
-      },
-      {
-        path: testLink,
-        element: (
-          <Suspense fallback={<MySpinner />}>
-            <Test />
-          </Suspense>
-        ),
-      },
-      {
-        index: true,
-        path: aboutLink,
-        element: (
-          <Suspense fallback={<MySpinner />}>
-            <About />
-          </Suspense>
-        ),
-      },
-    ],
-  },
-]);
+const ErrorPage = lazy(() => import("../Components/Layouts/errorPage.tsx"));
 
-const main_router = createBrowserRouter([
-  {
-    path: BaseLink,
-    element: (
-      <Suspense fallback={<MySpinner></MySpinner>}>
-        <ThisApp></ThisApp>
-      </Suspense>
-    ),
-    errorElement: (
-      <Suspense fallback={<MySpinner></MySpinner>}>
-        <ErrPage></ErrPage>
-      </Suspense>
-    ),
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<MySpinner></MySpinner>}>
-            <Production></Production>
-          </Suspense>
-        ),
-      },
-      {
-        path: testLink,
-        element: (
-          <Suspense fallback={<MySpinner></MySpinner>}>
-            <Test></Test>
-          </Suspense>
-        ),
-      },
-      {
-        path: aboutLink,
-        element: (
-          <Suspense fallback={<MySpinner></MySpinner>}>
-            <About></About>
-          </Suspense>
-        ),
-      },
-    ],
-  },
-]);
+const Valantis = lazy(() => import("../Components/Layouts/valantis.tsx"));
+const TestPage = lazy(() => import("../Components/Layouts/testPage.tsx"));
+const Content = lazy(() => import("../Components/Layouts/content.tsx"));
 
-export default main_router;
+function MyHashRouter() {
+  return (
+    <HashRouter basename="/">
+      <Routes>
+        <Route
+          path="/"
+          element={<MainApp />}
+          errorElement={
+            <Suspense fallback={<MySpinner />}>
+              <ErrorPage />
+            </Suspense>
+          }
+        >
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<MySpinner />}>
+                <TestPage />
+              </Suspense>
+            }
+          ></Route>
+          <Route
+            path="about"
+            element={
+              <Suspense fallback={<MySpinner />}>
+                <Valantis />
+              </Suspense>
+            }
+          ></Route>
+          <Route
+            path="production"
+            element={
+              <Suspense fallback={<MySpinner />}>
+                <Content />
+              </Suspense>
+            }
+          ></Route>
+        </Route>
+      </Routes>
+    </HashRouter>
+  );
+}
+
+export default MyHashRouter;

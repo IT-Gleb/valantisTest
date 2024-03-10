@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { BaseLink } from "../../lib";
+
 function TestPage() {
   return (
     <section className="w-[100%] p-4 text-[0.85rem]/[1.1rem]">
@@ -27,6 +30,28 @@ function TestPage() {
       <p className=" indent-5 mt-4">
         Внешний вид сайта оставляем на Ваше усмотрение.
       </p>
+      <h3 className="font-bold uppercase mt-5 mb-4">Перейти к тестированию</h3>
+      <ul>
+        <li className="mt-2">
+          <p>
+            Выберите в меню пункт -{" "}
+            <span className="uppercase text-slate-500 font-medium">
+              продукция
+            </span>
+          </p>
+        </li>
+        <li className="mt-2">
+          Перейдите по ссылке -{" "}
+          <Link
+            to={BaseLink}
+            replace={true}
+            state={{ page: 0 }}
+            className="uppercase text-slate-700 font-bold"
+          >
+            Тестировать
+          </Link>
+        </li>
+      </ul>
     </section>
   );
 }
