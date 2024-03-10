@@ -8,9 +8,9 @@ export const PaginationBtnsPageCount: number = 7;
 export const noName: string = "Без бренда";
 export const LOAD_DELAY: number = 2800;
 export const BASE_URL: string = import.meta.env.BASE_URL;
-export const aboutLink: string = BASE_URL + "about";
-export const BaseLink: string = BASE_URL;
-export const testLink: string = BASE_URL + "test";
+export const aboutLink: string = "about";
+export const BaseLink: string = "production";
+export const testLink: string = "/";
 
 export type TValantisItem = {
   id: string;
