@@ -19,6 +19,8 @@ function Pages({
   const [ulWidth, setUlWidth] = useState<number>(0);
   const ulRef = useRef<HTMLUListElement>(null);
 
+  //console.log("render Pages");
+
   if (paramPageCount < 1) return;
 
   useEffect(() => {

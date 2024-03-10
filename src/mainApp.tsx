@@ -1,6 +1,8 @@
 import HeaderTop from "./Components/Layouts/headerTop";
 import FooterMain from "./Components/Layouts/footerMain";
-import Content from "./Components/Layouts/content";
+//import Content from "./Components/Layouts/content";
+import { Outlet } from "react-router-dom";
+import MainMenu from "./Components/menu/mainMenu";
 
 function MainApp() {
   return (
@@ -25,8 +27,10 @@ function MainApp() {
           </span>
         </div>
       </HeaderTop>
+      <MainMenu></MainMenu>
       <main className="container  flex-auto min-h-[80vh] mt-5">
-        <Content></Content>
+        <Outlet></Outlet>
+        {/* <Content></Content> */}
       </main>
       <FooterMain>
         <div className=" w-[100%] flex flex-col md:flex-row items-end gap-x-1 pt-2 ">

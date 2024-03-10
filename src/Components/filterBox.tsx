@@ -28,41 +28,43 @@ function FilterBox({ closeBox }: { closeBox: () => void }) {
   return (
     <section className="w-[100%] md:w-[55%] min-h-[5vh] ml-auto border-2 border-black/40 p-4 transition-all animate-abc overflow-hidden">
       <h4 className="font-bold text-[1.2rem]/[1.3rem]">Фильтрация товаров</h4>
+
       <div className="flex items-center gap-x-4 text-[0.8rem]/[1rem] mt-4">
         <label className=" cursor-pointer">
-          По бренду:
           <input
-            className=" ml-2 cursor-pointer"
+            className=" mr-2 cursor-pointer"
             type="radio"
             name="filter"
             id="filter"
             value={0}
             onChange={setupModeFilter}
           />
+          По бренду
         </label>
         <label className=" cursor-pointer">
-          По наименованию:
           <input
-            className="ml-2 cursor-pointer"
+            className="mr-2 cursor-pointer"
             type="radio"
             name="filter"
             id="filter2"
             value={1}
             onChange={setupModeFilter}
           />
+          По наименованию
         </label>
         <label className=" cursor-pointer">
-          По цене:
           <input
-            className=" ml-2 cursor-pointer"
+            className=" mr-2 cursor-pointer"
             type="radio"
             name="filter"
             id="filter3"
             value={2}
             onChange={setupModeFilter}
           />
+          По цене
         </label>
       </div>
+
       <div className="flex flex-col gap-y-10 items-start mt-8">
         {radioValue === 0 && <SelectBrand></SelectBrand>}
         {radioValue === 1 && <InputName paramEnter={doFilter}></InputName>}

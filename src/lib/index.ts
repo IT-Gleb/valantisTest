@@ -6,7 +6,11 @@ export const ITEMS_PER_PAGE: number = 50;
 export const ITEMS_DOWNLOADED: number = ITEMS_PER_PAGE + 10;
 export const PaginationBtnsPageCount: number = 7;
 export const noName: string = "Без бренда";
-export const LOAD_DELAY: number = 2400;
+export const LOAD_DELAY: number = 2800;
+export const BASE_URL: string = import.meta.env.BASE_URL;
+export const aboutLink: string = BASE_URL + "about";
+export const BaseLink: string = BASE_URL;
+export const testLink: string = BASE_URL + "test";
 
 export type TValantisItem = {
   id: string;

@@ -16,6 +16,7 @@ async function doFetchData(
   paramFetchOptions: TparamObject,
   paramSetupData: (paramData: any) => void,
   paramSetupLoaded: (paramData: boolean) => void,
+  paramSetError: (param: boolean) => void,
   paramCurrPage: number = 0,
   paramDelay: number = 1000
 ) {
@@ -23,6 +24,7 @@ async function doFetchData(
   let errStatus: number = 0;
   try {
     paramSetupLoaded(true);
+    paramSetError(false);
     const response = await fetch(TO_VALANTIS_API, options);
     const data = await response.json();
     if (!response.ok) {
@@ -92,11 +94,13 @@ async function doFetchData(
           paramFetchOptions,
           paramSetupData,
           paramSetupLoaded,
+          paramSetError,
           paramCurrPage
         );
       }, paramDelay);
     }
     paramSetupLoaded(false);
+    paramSetError(true);
   }
 }
 
@@ -148,6 +152,8 @@ function useFilteredData() {
   const [allRec, setAllRec] = useState<number>(0);
   //Основные данные
   const [data, setData] = useState<TValantisData>([]);
+  //Ошибка при получении данных или не найдено
+  const [errorData, setErrorData] = useState<boolean>(false);
 
   //Получить данные о количестве страниц и товаров
   useEffect(() => {
@@ -205,9 +211,11 @@ function useFilteredData() {
     const isLoaded = (param: boolean) => {
       setIsLoad(param);
     };
+
     const getData = (paramData: any) => {
       //console.log(paramData);
       if (Array.isArray(paramData)) {
+        setErrorData(false);
         let tmp: TValantisData = Array.from(paramData);
         //console.log(tmp);
         if (tmp.length > 1) tmp = uniqBy(tmp, "id");
@@ -220,12 +228,16 @@ function useFilteredData() {
       }
     };
 
-    doFetchData(filterRecData, getData, isLoaded, currentPage);
+    function setupError(param: boolean) {
+      setErrorData(param);
+    }
+
+    doFetchData(filterRecData, getData, isLoaded, setupError, currentPage);
 
     //}
   }, [currentPage]);
 
-  return { allRec, PagesCount, isLoad, data };
+  return { allRec, PagesCount, isLoad, data, errorData };
 }
 
 export { useFilteredData };

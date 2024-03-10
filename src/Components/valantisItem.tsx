@@ -7,6 +7,8 @@ function ValantisItem({
   paramGood: TValantisItem;
   paramIndex: number;
 }) {
+  //console.log("render Item");
+
   return (
     <article className="bg-white flex flex-col items-start overflow-hidden border-2 border-slate-300 border-r-slate-600 border-b-slate-600 rounded-lg transition-all hover:border-slate-700 hover:-translate-y-2 hover:scale-110 hover:shadow-md hover:shadow-black hover:bg-slate-100">
       <div className="w-[100%] text-center bg-slate-600 text-slate-50 text-[0.7rem]/[0.8rem] py-1">

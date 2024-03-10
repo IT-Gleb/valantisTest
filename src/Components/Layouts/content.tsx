@@ -49,7 +49,7 @@ function Content() {
 
   if (loading) {
     return (
-      <div className="w-[100%] nt-[20%]">
+      <div className="w-[100%] mt-[20%]">
         <MySpinner></MySpinner>
       </div>
     );

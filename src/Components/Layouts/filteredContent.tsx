@@ -4,20 +4,21 @@ import useFilter from "../../store/store";
 
 import FilterShowBtn from "../UI/buttons/filterShowBtn";
 import MySpinner from "../UI/mySpinner";
+import ErrorBox from "../UI/messages/errorBox";
 import { LOAD_DELAY } from "../../lib";
 
 const ValantisPage = lazy(() => import("../valantisPage"));
 const Pages = lazy(() => import("../Pages"));
 
 function FilteredContent() {
-  const { allRec, PagesCount, data, isLoad } = useFilteredData();
+  const { allRec, PagesCount, data, errorData } = useFilteredData();
   const clearFilter = useFilter((state) => state.setActive);
   const setupActivePage = useFilter((state) => state.setActivePage);
   const [activePage, setActivePage] = useState<number>(0);
   const getFilterMode = useFilter((state) => state.filterMode);
   const getCurrValue = useFilter((state) => state.currentValue);
   const [textMode, setTextMode] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const timerId = useRef(-1);
 
   const removeFilter = () => {
@@ -30,6 +31,27 @@ function FilteredContent() {
     setupActivePage(paramIndex);
     setActivePage(paramIndex);
   };
+
+  // Смена страницы.
+  useEffect(() => {
+    setLoading(true);
+    timerId.current = setTimeout(() => {
+      if (loading || data.length < 1) {
+        setLoading(true);
+        clearTimeout(timerId.current);
+        timerId.current = setTimeout(() => {
+          setLoading(false);
+          clearTimeout(timerId.current);
+        }, LOAD_DELAY);
+        //-------------------
+      } else {
+        setLoading(false);
+      }
+    }, LOAD_DELAY);
+    return () => {
+      clearTimeout(timerId.current);
+    };
+  }, [activePage]);
 
   useEffect(() => {
     let txt: string = "";
@@ -48,29 +70,6 @@ function FilteredContent() {
     setTextMode(txt);
   }, [getFilterMode]);
 
-  useEffect(() => {
-    setLoading(true);
-    timerId.current = setTimeout(() => {
-      if (isLoad || data.length < 1) {
-        setLoading(true);
-        clearInterval(timerId.current);
-        //Только если загрузка и нет данных
-        timerId.current = setTimeout(() => {
-          if (isLoad && data.length < 1) {
-            setLoading(true);
-          } else {
-            setLoading(false);
-          }
-        }, LOAD_DELAY);
-      } else {
-        setLoading(false);
-      }
-    }, LOAD_DELAY);
-    return () => {
-      clearTimeout(timerId.current);
-    };
-  }, [activePage]);
-
   //Загрузка
   if (loading) {
     return (
@@ -81,23 +80,32 @@ function FilteredContent() {
   }
 
   //Если ничего не найдено
-  if (!loading && data.length < 1) {
+  if ((!loading && data.length < 1) || errorData) {
     return (
       <section className="w-[100%">
-        <div className="flex items-center justify-end p-2">
+        <div className="flex items-center justify-end p-2 mb-12">
           <FilterShowBtn
             paramTitle="Отменить фильтрацию"
             setShowFilter={removeFilter}
           ></FilterShowBtn>
         </div>
-        <div className="w-fit mx-auto font-medium text-[1.8rem]/[2rem] mt-8">
-          {"По Вашему запросу - ничего не найдено... :-("}
-        </div>
+        <ErrorBox>
+          <>
+            <h2 className="w-[100%] p-2 border-b-2 border-b-white/30 overflow-hidden">
+              Внимание!!!
+            </h2>
+            <div className="text-[0.9rem]/[1rem] font-normal text-center my-8 overflow-hidden">
+              <p>По Вашему запросу - нечего не найдено.</p>
+              <p>Попробуйте, отменить фильтрацию. Изменить запрос!!!</p>
+              <p className="mt-4 font-bold">{":-("}</p>
+            </div>
+          </>
+        </ErrorBox>
       </section>
     );
   }
   //-------------------------------
-  if (!loading)
+  if (!loading && !errorData)
     return (
       <section className="w-[100%] p-0 m-0">
         <div className="flex items-center justify-end p-2">
