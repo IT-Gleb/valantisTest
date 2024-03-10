@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "browserslist": "cover 99.5%",
+  "homepage": "https://it-gleb.github.io/valantisTest/",
   
   "scripts": {
     "dev": "vite",
