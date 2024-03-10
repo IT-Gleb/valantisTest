@@ -1,0 +1,1 @@
+import{j as t}from"./index-tAmM7JxE.js";function o({children:r}){return t.jsx("div",{className:"w-[50%] mx-auto mt-[20%] p-5 bg-red-600 text-white text-[1.5rem]/[1.5rem] font-bold border-[0.7rem] border-slate-800 shadow-xl shadow-black/50 ",children:r})}export{o as E};
