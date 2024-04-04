@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { orderBy } from "lodash";
+import { orderBy, uniq } from "lodash";
 
 import {
   ErrorStatus,
@@ -20,6 +20,7 @@ async function valantis_maxRec(
 ) {
   const auth_res: string = md5_fromPassword();
   let status = 200;
+  let error500: any = null;
   paramLoading(true);
   await fetch(TO_VALANTIS_API, {
     headers: { "X-Auth": auth_res, "Content-Type": "application/json" },
@@ -29,17 +30,21 @@ async function valantis_maxRec(
     .then((response) => {
       if (!response.ok) {
         status = response.status;
+        error500 = response;
         ErrorStatus(status);
       } else return response.json();
     })
     .then((data) => {
-      paramSet(data.result.length);
+      let tmpData = uniq(data.result);
+      //console.log(data.result.length, tmpData.length);
+      paramSet(tmpData.length);
       paramLoading(false);
     })
     .catch((e) => {
       console.log(e);
       paramLoading(false);
       if (status !== 401 && status !== 403 && status !== 404) {
+        if (status === 500) console.log(error500);
         setTimeout(() => {
           valantis_maxRec(paramFetch, paramSet, paramLoading);
         }, paramDelayOnError);
@@ -57,6 +62,7 @@ async function valantis_fetcher(
 ) {
   const auth_res: string = md5_fromPassword();
   let status: number = 0;
+  let error500: any = null;
   let fetchOptions = {
     headers: { "X-Auth": auth_res, "Content-Type": "application/json" },
     method: "POST",
@@ -68,13 +74,15 @@ async function valantis_fetcher(
     .then((res) => {
       if (!res.ok) {
         status = res.status;
+        error500 = res;
         ErrorStatus(status);
       } else return res.json();
     })
     .then(async (data) => {
+      let tmp = uniq(data.result);
       let param: TparamObject = {
         action: "get_items",
-        params: { ids: data.result },
+        params: { ids: tmp },
       };
       try {
         fetchOptions.body = JSON.stringify(param);
@@ -83,6 +91,7 @@ async function valantis_fetcher(
         const data_1 = await response.json();
         if (!response.ok) {
           status = response.status;
+
           ErrorStatus(status);
         } else {
           paramSet(data_1.result);
@@ -98,6 +107,7 @@ async function valantis_fetcher(
       //console.log(err);
       paramLoading(false);
       if (status !== 401 && status !== 403 && status !== 404) {
+        if (status === 500) console.log(error500);
         setTimeout(() => {
           valantis_fetcher(paramURL, paramFetch, paramSet, paramLoading);
         }, paramDelayonError);

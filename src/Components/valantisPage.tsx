@@ -39,8 +39,8 @@ function ValantisPage({
           <span className="text-[24px]/[24px] font-bold">{paramPage + 1}</span>
           <span className="text-[24px]/[24px] font-bold">/{paramMaxRec}</span>
         </div>
-        {paramItems.length > 12 && (
-          <div className=" self-end">
+        {paramItems.length > 4 && (
+          <div className=" self-end ">
             <UpBtn></UpBtn>
           </div>
         )}

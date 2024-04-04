@@ -51,9 +51,11 @@ function Content() {
   }, [currentPage]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setMessage(true);
-    }, 150000);
+    if (!isFiltered) {
+      setTimeout(() => {
+        setMessage(true);
+      }, 150000);
+    }
   }, [isMessage]);
 
   if (loading) {

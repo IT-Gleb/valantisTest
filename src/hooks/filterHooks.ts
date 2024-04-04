@@ -5,6 +5,7 @@ import {
   ITEMS_PER_PAGE,
   TO_VALANTIS_API,
   TValantisData,
+  TValantisItem,
   TparamObject,
   noName,
   setup_FetchOptions,
@@ -22,6 +23,7 @@ async function doFetchData(
 ) {
   let options = setup_FetchOptions(paramFetchOptions);
   let errStatus: number = 0;
+  let error500: any = null;
   try {
     paramSetupLoaded(true);
     paramSetError(false);
@@ -30,6 +32,7 @@ async function doFetchData(
     if (!response.ok) {
       errStatus = response.status;
       ErrorStatus(errStatus);
+      error500 = response;
     }
     if (response.ok) {
       //paramSetupData(data.result);
@@ -42,6 +45,7 @@ async function doFetchData(
       }
       //Убрать повторяющиеся значения
       tmp = uniq(tmp);
+      tmp = orderBy(tmp, [], ["asc"]);
 
       //console.log(tmp, tmp.length);
 
@@ -73,6 +77,7 @@ async function doFetchData(
       if (!res.ok) {
         errStatus = res.status;
         ErrorStatus(errStatus);
+        error500 = res;
       }
       //Данные получены
       if (res.ok) {
@@ -89,6 +94,7 @@ async function doFetchData(
       errStatus !== 403 &&
       errStatus !== 404
     ) {
+      if (errStatus === 500) console.log(error500);
       setTimeout(() => {
         doFetchData(
           paramFetchOptions,
@@ -112,6 +118,7 @@ async function doFetchCount(
 ) {
   const options = setup_FetchOptions(paramFetch);
   let errStatus: number = -1;
+  let error500: any = null;
   try {
     paramIsLoad(true);
     const response = await fetch(TO_VALANTIS_API, options);
@@ -122,6 +129,7 @@ async function doFetchCount(
     }
     if (!response.ok) {
       paramGetData(-1);
+      error500 = response;
       errStatus = response.status;
       ErrorStatus(errStatus);
     }
@@ -129,6 +137,7 @@ async function doFetchCount(
     console.log(err);
     paramIsLoad(false);
     if (errStatus !== 401 && errStatus !== 403 && errStatus !== 404) {
+      if (errStatus === 500) console.log(error500);
       setTimeout(() => {
         doFetchCount(paramFetch, paramGetData, paramIsLoad);
       }, paramDelay);
@@ -214,9 +223,19 @@ function useFilteredData() {
 
     const getData = (paramData: any) => {
       //console.log(paramData);
-      if (Array.isArray(paramData)) {
+      if (Array.isArray(paramData) && paramData.length > 0) {
         setErrorData(false);
         let tmp: TValantisData = Array.from(paramData);
+        //Убрать без наименований бренда
+        if (filterMode === 0) {
+          let fname = filterBrand;
+          if (fname !== noName) {
+            tmp = tmp.filter((item: TValantisItem) => {
+              return item.brand === fname;
+            });
+          }
+        }
+        //-----------------------------------------
         //console.log(tmp);
         if (tmp.length > 1) tmp = uniqBy(tmp, "id");
         if (tmp.length > ITEMS_PER_PAGE) {
@@ -225,12 +244,14 @@ function useFilteredData() {
         tmp = orderBy(tmp, ["price"], ["asc"]);
         //console.log(tmp);
         setData(tmp);
-      }
+      } else if (Array.isArray(paramData)) setData([]);
     };
 
     function setupError(param: boolean) {
       setErrorData(param);
     }
+
+    getData([]);
 
     doFetchData(filterRecData, getData, isLoaded, setupError, currentPage);
 
