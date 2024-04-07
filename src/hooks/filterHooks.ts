@@ -32,7 +32,7 @@ async function doFetchData(
     if (!response.ok) {
       errStatus = response.status;
       ErrorStatus(errStatus);
-      error500 = response;
+      error500 = response.json();
     }
     if (response.ok) {
       //paramSetupData(data.result);
@@ -77,7 +77,7 @@ async function doFetchData(
       if (!res.ok) {
         errStatus = res.status;
         ErrorStatus(errStatus);
-        error500 = res;
+        error500 = res.json();
       }
       //Данные получены
       if (res.ok) {
@@ -129,7 +129,7 @@ async function doFetchCount(
     }
     if (!response.ok) {
       paramGetData(-1);
-      error500 = response;
+      error500 = response.json();
       errStatus = response.status;
       ErrorStatus(errStatus);
     }
@@ -226,16 +226,16 @@ function useFilteredData() {
       if (Array.isArray(paramData) && paramData.length > 0) {
         setErrorData(false);
         let tmp: TValantisData = Array.from(paramData);
-        //Убрать без наименований бренда
-        if (filterMode === 0) {
-          let fname = filterBrand;
-          if (fname !== noName) {
-            tmp = tmp.filter((item: TValantisItem) => {
-              return item.brand === fname;
-            });
-          }
-        }
-        //-----------------------------------------
+        // //Убрать без наименований бренда
+        // if (filterMode === 0) {
+        //   let fname = filterBrand;
+        //   if (fname !== noName) {
+        //     tmp = tmp.filter((item: TValantisItem) => {
+        //       return item.brand === fname;
+        //     });
+        //   }
+        // }
+        // //-----------------------------------------
         //console.log(tmp);
         if (tmp.length > 1) tmp = uniqBy(tmp, "id");
         if (tmp.length > ITEMS_PER_PAGE) {

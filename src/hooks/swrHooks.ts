@@ -30,7 +30,7 @@ async function valantis_maxRec(
     .then((response) => {
       if (!response.ok) {
         status = response.status;
-        error500 = response;
+        error500 = response.json();
         ErrorStatus(status);
       } else return response.json();
     })
@@ -74,7 +74,7 @@ async function valantis_fetcher(
     .then((res) => {
       if (!res.ok) {
         status = res.status;
-        error500 = res;
+        error500 = res.json();
         ErrorStatus(status);
       } else return res.json();
     })
@@ -97,14 +97,13 @@ async function valantis_fetcher(
           paramSet(data_1.result);
           paramLoading(false);
         }
-      } catch (err) {
-        //console.log(err);
+      } catch (err: any) {
+        console.log(err);
         paramLoading(false);
         ErrorStatus(status);
       }
     }) //.then((data) => data.result)
     .catch(() => {
-      //console.log(err);
       paramLoading(false);
       if (status !== 401 && status !== 403 && status !== 404) {
         if (status === 500) console.log(error500);

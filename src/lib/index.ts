@@ -71,7 +71,7 @@ export async function valantis_Fetcher(param: TparamObject, onSuccess: any) {
       onSuccess(data.result);
     })
     .catch((e) => {
-      console.log(e);
+      console.log(e.response ? e.response : e);
     });
 }
 
